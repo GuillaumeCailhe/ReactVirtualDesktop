@@ -7,9 +7,7 @@ class App extends Component {
     return (
       <div>
         <TaskBar />
-        <Desktop>
-          
-        </Desktop>
+        <Desktop />
       </div>
     );
   }
