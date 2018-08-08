@@ -16,10 +16,6 @@ const WindowHeader = styled.section`
 	border-top-right-radius: 2%;
 `
 
-const WindowButton = styled.button`
-
-`
-
 class Window extends Component {
   render() {
     return (  

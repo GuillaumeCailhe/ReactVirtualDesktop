@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
-import Window from './Components/Window.js';
 import TaskBar from './Components/Taskbar.js';
+import Desktop from './Components/Desktop.js';
 
 class App extends Component {
   render() {
     return (
       <div>
         <TaskBar />
-        <div>
+        <Desktop>
           
-        </div>
+        </Desktop>
       </div>
     );
   }
