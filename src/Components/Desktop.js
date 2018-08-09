@@ -21,7 +21,7 @@ class Desktop extends Component {
 	render(){
 		return(
 			<Wallpaper>
-				<Window title="Hello world !" />
+				
 			</Wallpaper>
 		);
 	}
