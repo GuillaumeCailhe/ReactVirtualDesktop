@@ -6,6 +6,7 @@
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-draggable": "^3.0.5",
+    "react-resizable": "^1.7.5",
     "react-scripts": "1.1.4"
   },
   "scripts": {

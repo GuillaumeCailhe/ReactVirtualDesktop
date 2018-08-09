@@ -5,9 +5,9 @@ import styled, { keyframes } from 'styled-components';
 
 const Bar = styled.header`
 	background-color: black;
-	height: 50px;
+	height: 30px;
 	color: white;
-	line-height: 50px;
+	line-height: 30px;
 `;
 
 const rotateLogo = keyframes`
@@ -18,7 +18,7 @@ const rotateLogo = keyframes`
 
 const LogoButton = styled.img`
 	display: inline-block;
-	height: 50px;
+	height: 30px;
 	animation: ${rotateLogo} infinite 20s linear;
 `;
 
