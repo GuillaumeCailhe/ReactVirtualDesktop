@@ -7,6 +7,8 @@ import { faReact } from '@fortawesome/free-brands-svg-icons'
 import { faWindowMinimize,faWindowMaximize,faWindowClose} from '@fortawesome/free-solid-svg-icons'
 
 const WindowWrapper = styled.section`
+	position: absolute;
+
   width: 500px;
   height: 400px;
 
@@ -49,7 +51,7 @@ const WindowButtonGroup = styled.div`
 	position: absolute;
 	top: 0;
 	bottom: 0;
-	right: 5px;
+	right: 6px;
 
 	height: 100%;
 

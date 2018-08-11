@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import Window from './Window.js'
+import PropTypes from 'prop-types'
 
 const Wallpaper = styled.div`
 	background : #61dafb;
@@ -19,12 +20,20 @@ const Wallpaper = styled.div`
 
 class Desktop extends Component {
 	render(){
+		const windows = this.props.tasks.map((task, index)=>
+			<Window key={index} title={task.title} />
+		)
+
 		return(
 			<Wallpaper>
-				<Window title="Hello world ! " />
+				{windows}
 			</Wallpaper>
 		)
 	}
+}
+
+Desktop.propTypes = {
+	tasks: PropTypes.array,
 }
 
 export default Desktop;

@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import Clock from "./Clock"
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faReact } from '@fortawesome/free-brands-svg-icons'
+import PropTypes from 'prop-types'
 
 const Bar = styled.header`
 	background-color: black;
@@ -23,7 +24,7 @@ const StyledLogo = styled(Logo)`
 	color: #61dafb;
 `
 
-const TaskGroup = styled.ul`
+const StyledTaskList = styled(TaskList)`
 	display: inline-block;
 	position: absolute;
 	top: 0;
@@ -51,29 +52,31 @@ function Logo(props){
 }
 
 function TaskList(props){
-		const tasks = props.tasks.map((window)=>
-				<Task key={window}>{window}</Task>
-			)
-		return(
-			<TaskGroup>{tasks}</TaskGroup>
+		const tasks = props.tasks.map((task, index)=>
+		<Task 
+			key={index}
+			onClick={() => props.onTaskClick(index)}
+		>
+			{task.title}
+		</Task>
 		)
+	return(
+		<ul className={props.className}> {tasks}</ul>
+	)
 }
 
 class TaskBar extends Component {
 
-  constructor(props){
-    super(props);
-    this.state = {
-    	tasks: ["Hello world !", "Text editor"]
-    }
-  }
-
   render() {
+
     return (
 		<Bar>
 			<StyledLogo />
 
-			<TaskList tasks={this.state.tasks} />
+			<StyledTaskList 
+			tasks={this.props.tasks}
+			onTaskClick = {this.props.onTaskClick}
+		 	/>
 
 			<ClockWrapper>
 				<Clock />
@@ -82,5 +85,11 @@ class TaskBar extends Component {
     );
   }
 }
+
+TaskBar.propTypes = {
+	tasks: PropTypes.array,
+	onTaskClick: PropTypes.func.isRequired,
+}
+
 
 export default TaskBar;
