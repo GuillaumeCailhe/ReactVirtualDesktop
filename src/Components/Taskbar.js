@@ -1,28 +1,27 @@
-import React, {Component} from 'react';
-import logo from '../logo.svg';
-import Clock from "./Clock";
-import styled, { keyframes } from 'styled-components';
+import React, {Component} from 'react'
+import Clock from "./Clock"
+import styled, { keyframes } from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faReact } from '@fortawesome/free-brands-svg-icons'
 
 const Bar = styled.header`
 	background-color: black;
 	height: 30px;
 	color: white;
 	line-height: 30px;
-
+	
+	vertical-align:middle;
 	font-size: 0.7em;
-`;
+`
 
-const rotateLogo = keyframes`
-  	from { transform: rotate(0deg); }
-  	to { transform: rotate(360deg); }
-
-`;
-
-const LogoButton = styled.img`
+const StyledLogo = styled(Logo)`
 	display: inline-block;
-	height: 30px;
-	animation: ${rotateLogo} infinite 20s linear;
-`;
+	margin-left: 10px;
+
+	vertical-align:middle;
+	font-size: 2em;
+	color: #61dafb;
+`
 
 const TaskGroup = styled.ul`
 	display: inline-block;
@@ -43,15 +42,21 @@ const ClockWrapper = styled.div`
 	display: inline-block;
 	position: absolute;
 	right: 10px;
-`;
+`
+
+function Logo(props){
+	return(
+		<FontAwesomeIcon className={props.className} icon={faReact} spin />
+	)
+}
 
 function TaskList(props){
 		const tasks = props.tasks.map((window)=>
 				<Task key={window}>{window}</Task>
-			);
+			)
 		return(
 			<TaskGroup>{tasks}</TaskGroup>
-		);
+		)
 }
 
 class TaskBar extends Component {
@@ -66,7 +71,7 @@ class TaskBar extends Component {
   render() {
     return (
 		<Bar>
-			<LogoButton src={logo} />
+			<StyledLogo />
 
 			<TaskList tasks={this.state.tasks} />
 

@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
-import Draggable from 'react-draggable';
-import styled from 'styled-components';
-import logo from '../logo.svg';
-import PropTypes from 'prop-types';
+import React, {Component} from 'react'
+import Draggable from 'react-draggable'
+import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faWindowMinimize,faWindowMaximize,faWindowClose } from '@fortawesome/free-solid-svg-icons'
+import { faReact } from '@fortawesome/free-brands-svg-icons'
+import { faWindowMinimize,faWindowMaximize,faWindowClose} from '@fortawesome/free-solid-svg-icons'
 
 const WindowWrapper = styled.section`
   width: 500px;
@@ -27,10 +27,10 @@ const WindowHeader = styled.div`
 	text-align: center;
 `
 
-const HeaderLogo = styled.img`
+const StyledWindowLogo = styled(WindowLogo)`
 	display: inline-block;
 	position: absolute;
-	left: 5px;
+	left: 10px;
 	bottom: 0;
 	top: 0;
 
@@ -76,6 +76,12 @@ const WindowBody = styled.div`
 	overflow: auto;
 `
 
+function WindowLogo(props){
+	return(
+		<FontAwesomeIcon className={props.className} icon={faReact} />
+	)
+}
+
 function WindowButton(props){
 	return(
 	  <FontAwesomeIcon className={props.className} icon={props.icon} />
@@ -92,7 +98,7 @@ class Window extends Component {
 		    >
 		    	<WindowWrapper>
 		      	<WindowHeader className="window-handle">
-							<HeaderLogo src={logo}  />
+							<StyledWindowLogo />
 							<HeaderTitle>{this.props.title}</HeaderTitle>
 
 							<WindowButtonGroup>

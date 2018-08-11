@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import styled from 'styled-components';
-import Window from './Window.js';
+import React, {Component} from 'react'
+import styled from 'styled-components'
+import Window from './Window.js'
 
 const Wallpaper = styled.div`
 	background : #61dafb;
@@ -21,9 +21,9 @@ class Desktop extends Component {
 	render(){
 		return(
 			<Wallpaper>
-				<Window />
+				<Window title="Hello world ! " />
 			</Wallpaper>
-		);
+		)
 	}
 }
 
