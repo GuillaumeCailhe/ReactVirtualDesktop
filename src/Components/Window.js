@@ -3,6 +3,8 @@ import Draggable from 'react-draggable';
 import styled from 'styled-components';
 import logo from '../logo.svg';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faWindowMinimize,faWindowMaximize,faWindowClose } from '@fortawesome/free-solid-svg-icons'
 
 const WindowWrapper = styled.section`
   width: 500px;
@@ -12,7 +14,7 @@ const WindowWrapper = styled.section`
 
   border-radius: 1%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-`;
+`
 
 const WindowHeader = styled.div`
 	position: absolute;
@@ -53,28 +55,13 @@ const WindowButtonGroup = styled.div`
 
 	margin: auto;
 
+	color: #686871;
+	font-size: 0.8em;
 `
 
-const WindowButton = styled.button`
-	display: inline-block;
-	vertical-align:middle;
-  border: none;
-  padding: 6px;
-  margin: 4px 2px;
-  border-radius: 50%;
+const StyledWindowButton = styled(WindowButton)`
+  margin-left: 5px;
 `
-
-	const WindowReduceButton = WindowButton.extend`
-		background: gold;
-	`
-
-	const WindowEnlargeButton = WindowButton.extend`
-		background: forestgreen;
-	`
-
-	const WindowCloseButton = WindowButton.extend`
-		background: crimson;
-	`
 
 const WindowBody = styled.div`
 	background: #fafafe;
@@ -89,6 +76,13 @@ const WindowBody = styled.div`
 	overflow: auto;
 `
 
+function WindowButton(props){
+	return(
+	  <FontAwesomeIcon className={props.className} icon={props.icon} />
+	)
+}
+
+
 class Window extends Component {
   render() {
     return (  
@@ -102,9 +96,9 @@ class Window extends Component {
 							<HeaderTitle>{this.props.title}</HeaderTitle>
 
 							<WindowButtonGroup>
-								<WindowReduceButton  />
-								<WindowEnlargeButton />
-								<WindowCloseButton />
+								<StyledWindowButton icon={faWindowMinimize} />
+								<StyledWindowButton icon={faWindowMaximize} />
+								<StyledWindowButton icon={faWindowClose} />
 							</WindowButtonGroup>
 
 		      	</WindowHeader>
@@ -123,4 +117,4 @@ Window.propTypes = {
 	title: PropTypes.string
 }
 
-export default Window;
+export default Window
