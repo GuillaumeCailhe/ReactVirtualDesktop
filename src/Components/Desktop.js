@@ -26,13 +26,14 @@ class Desktop extends Component {
 					<Window 
 						key={index}
 						id={index}
-						active={task.active} 
+						active={task.isWindowActive} 
+						resizable={task.isWindowResizable}
 					 	title={task.title}
 		      	minimizeFunction = {this.props.windowMinimizeFunction}
 		      	closeFunction = {this.props.windowCloseFunction}
 		  		/>
 	  		
-				return task.active ? window : null
+				return task.isWindowActive ? window : null
 	  	}
 		)
 

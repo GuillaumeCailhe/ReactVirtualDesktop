@@ -9,10 +9,16 @@ class App extends Component {
     this.state = {
       tasks: [{
         title: "Hello world !",
-        active: true
+        isWindowActive: true,
+        isWindowResizable: false,
+        defaultWindowWidth: 400,
+        defaultWindowHeight: 500,
       },{
         title:"Text editor",
-        active: false
+        isWindowActive: false,
+        isWindowResizable: true,
+        defaultWindowWidth: 200,
+        defaultWindowHeight: 200,
       }]
     }
 
@@ -30,7 +36,7 @@ class App extends Component {
   **/
   setWindowActivity(taskIndex, activity){
     let tasksCopy = this.state.tasks
-    tasksCopy[taskIndex].active = activity
+    tasksCopy[taskIndex].isWindowActive = activity
     this.setState({
       tasks: tasksCopy
     })

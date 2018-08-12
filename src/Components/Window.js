@@ -1,16 +1,14 @@
 import React, {Component} from 'react'
 import Draggable from 'react-draggable'
+import { ResizableBox } from 'react-resizable';
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faReact } from '@fortawesome/free-brands-svg-icons'
 import { faWindowMinimize,faWindowMaximize,faWindowClose} from '@fortawesome/free-solid-svg-icons'
 
-const WindowWrapper = styled.section`
+const WindowWrapper = styled.div`
 	position: absolute;
-
-  width: 500px;
-  height: 400px;
 
   background: #e6e6fa;
 
@@ -94,17 +92,35 @@ function WindowButton(props){
 	)
 }
 
+function ResizableWindow(props){
+	const resizableObject =(
+			<ResizableBox className={ props.resizable ? 'Resizable' : 'Unresizable' }
+    			width={props.width}
+  			 	height={props.height}
+  			 	minConstraints={[200, 50]}
+					axis={ props.resizable ? 'both' : 'none' }
+					handleSize={[0, 0]}
+		  >
+		  
+		  	{props.children}
+		  </ResizableBox>
+	)
+
+	return resizableObject
+}
 
 class Window extends Component {
   
   render() {
     return (  
-		    <Draggable 
-				bounds = "parent"
+    	<Draggable
+    		bounds="parent"
 				handle = ".window-handle"
-		    >
-		    	<WindowWrapper>
-		      	<WindowHeader className="window-handle">
+    	>   
+    		<WindowWrapper>
+    			<ResizableWindow width={this.props.defaultWidth} height={this.props.defaultHeight} resizable={this.props.resizable}>
+      			<WindowHeader className="window-handle">
+		      		
 							<StyledWindowLogo />
 							<HeaderTitle>{this.props.title}</HeaderTitle>
 
@@ -113,7 +129,8 @@ class Window extends Component {
 								<a onClick={() => this.props.minimizeFunction(this.props.id)}>
 									<StyledWindowButton icon={faWindowMinimize} onClick={() => alert("test")}  />
 								</a>
-
+								
+								{}
 								<a>
 									<StyledWindowButton icon={faWindowMaximize} />
 								</a>
@@ -126,11 +143,10 @@ class Window extends Component {
 		      	</WindowHeader>
 
 		      	<WindowBody>
-		      	</WindowBody>
-
-		      </WindowWrapper>
-		    </Draggable>   		
-
+		      	</WindowBody>  
+    		</ResizableWindow>
+			</WindowWrapper>
+  	</Draggable>	
     );
   }
 }
@@ -139,8 +155,16 @@ Window.propTypes = {
 	id: PropTypes.number.isRequired,
 	title: PropTypes.string,
 	active: PropTypes.bool,
+	resizable: PropTypes.bool,
+	defaultWidth: PropTypes.number,
+	defaultHeight: PropTypes.number,
 	minimizeFunction: PropTypes.func.isRequired,
 	closeFunction: PropTypes.func.isRequired
+}
+
+Window.defaultProps = {
+	defaultWidth: 500,
+	defaultHeight: 400
 }
 
 export default Window
