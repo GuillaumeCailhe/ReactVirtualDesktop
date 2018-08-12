@@ -23,10 +23,6 @@ class App extends Component {
     this.closeWindow = this.closeWindow.bind(this)
   }
 
-  componentDidMount(){
-    document.title = "React Virtual Desktop"
-  }
-  
   /**
   Set a window in(active)
   @taskIndex : the id of the window
