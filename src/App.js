@@ -9,27 +9,49 @@ class App extends Component {
     this.state = {
       tasks: [{
         title: "Hello world !",
-        active: 0
+        active: true
       },{
         title:"Text editor",
-        active: 0
+        active: false
       }]
     }
 
     // Binding
+    this.setWindowActivity = this.setWindowActivity.bind(this)
     this.openWindow = this.openWindow.bind(this)
+    this.minimizeWindow = this.minimizeWindow.bind(this)
+    this.closeWindow = this.closeWindow.bind(this)
   }
 
   componentDidMount(){
     document.title = "React Virtual Desktop"
   }
-
-  openWindow(taskIndex){
-    let tasksCopy = this.state.tasks;
-    tasksCopy[taskIndex].active = 1;
+  
+  /**
+  Set a window in(active)
+  @taskIndex : the id of the window
+  @activity : boolean, 1 for active, 0 inactive
+  **/
+  setWindowActivity(taskIndex, activity){
+    let tasksCopy = this.state.tasks
+    tasksCopy[taskIndex].active = activity
     this.setState({
       tasks: tasksCopy
     })
+  }
+
+  openWindow(taskIndex){
+    this.setWindowActivity(taskIndex, true)
+  }
+
+  minimizeWindow(taskIndex){
+    this.setWindowActivity(taskIndex, false)
+  }
+
+  closeWindow(taskIndex){
+    let tasksCopy = this.state.tasks
+    tasksCopy.splice(taskIndex, 1)
+    this.setState({tasks: tasksCopy})
   }
 
   render() {
@@ -41,6 +63,8 @@ class App extends Component {
         />
         <Desktop 
           tasks = {this.state.tasks}
+          windowMinimizeFunction = {this.minimizeWindow}
+          windowCloseFunction = {this.closeWindow}
         />
       </div>
     );

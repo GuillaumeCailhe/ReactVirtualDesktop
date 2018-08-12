@@ -63,6 +63,10 @@ const WindowButtonGroup = styled.div`
 
 const StyledWindowButton = styled(WindowButton)`
   margin-left: 5px;
+
+  &:hover {
+  	color: #141416;
+  }
 `
 
 const WindowBody = styled.div`
@@ -92,6 +96,7 @@ function WindowButton(props){
 
 
 class Window extends Component {
+  
   render() {
     return (  
 		    <Draggable 
@@ -103,10 +108,19 @@ class Window extends Component {
 							<StyledWindowLogo />
 							<HeaderTitle>{this.props.title}</HeaderTitle>
 
-							<WindowButtonGroup>
-								<StyledWindowButton icon={faWindowMinimize} />
-								<StyledWindowButton icon={faWindowMaximize} />
-								<StyledWindowButton icon={faWindowClose} />
+							<WindowButtonGroup onMouseDown={e => e.stopPropagation()}>
+
+								<a onClick={() => this.props.minimizeFunction(this.props.id)}>
+									<StyledWindowButton icon={faWindowMinimize} onClick={() => alert("test")}  />
+								</a>
+
+								<a>
+									<StyledWindowButton icon={faWindowMaximize} />
+								</a>
+
+								<a onClick={() => this.props.closeFunction(this.props.id)}>
+									<StyledWindowButton icon={faWindowClose} />
+								</a>
 							</WindowButtonGroup>
 
 		      	</WindowHeader>
@@ -122,7 +136,11 @@ class Window extends Component {
 }
 
 Window.propTypes = {
-	title: PropTypes.string
+	id: PropTypes.number.isRequired,
+	title: PropTypes.string,
+	active: PropTypes.bool,
+	minimizeFunction: PropTypes.func.isRequired,
+	closeFunction: PropTypes.func.isRequired
 }
 
 export default Window

@@ -21,7 +21,19 @@ const Wallpaper = styled.div`
 class Desktop extends Component {
 	render(){
 		const windows = this.props.tasks.map((task, index)=>
-			<Window key={index} title={task.title} />
+			{
+				const window = 
+					<Window 
+						key={index}
+						id={index}
+						active={task.active} 
+					 	title={task.title}
+		      	minimizeFunction = {this.props.windowMinimizeFunction}
+		      	closeFunction = {this.props.windowCloseFunction}
+		  		/>
+	  		
+				return task.active ? window : null
+	  	}
 		)
 
 		return(
@@ -34,6 +46,8 @@ class Desktop extends Component {
 
 Desktop.propTypes = {
 	tasks: PropTypes.array,
+	windowMinimizeFunction: PropTypes.func.isRequired,
+	windowCloseFunction: PropTypes.func.isRequired
 }
 
 export default Desktop;
