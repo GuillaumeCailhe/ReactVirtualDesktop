@@ -76,7 +76,8 @@ const WindowBody = styled.div`
 	left: 6px;
 	right: 6px;
 
-	padding: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
 	overflow: auto;
 `
 
@@ -188,6 +189,7 @@ class Window extends Component {
 		      	</WindowHeader>
 
 		      	<WindowBody>
+		      		{this.props.children}
 		      	</WindowBody>  
     		</ResizableWindow>
 			</WindowWrapper>

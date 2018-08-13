@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 import Window from './Window.js'
 import PropTypes from 'prop-types'
+import Welcome from './Applications/Welcome'
 
 const Wallpaper = styled.div`
 	background : #61dafb;
@@ -46,12 +47,16 @@ class Desktop extends Component {
 						id={index}
 						active={task.isWindowActive} 
 						resizable={task.isWindowResizable}
+						defaultWidth={task.defaultWindowWidth}
+						defaultHeight={task.defaultWindowHeight}
 						maxWidth={this.state.width}
 						maxHeight={this.state.height}
 					 	title={task.title}
 		      	minimizeFunction = {this.props.windowMinimizeFunction}
 		      	closeFunction = {this.props.windowCloseFunction}
-		  		/>
+		  		>
+						{index === 0 ? <Welcome /> : null}
+		  		</Window>
 	  		
 				return task.isWindowActive ? window : null
 	  	}

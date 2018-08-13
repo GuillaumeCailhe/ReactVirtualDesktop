@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import TaskBar from './Components/Taskbar.js'
 import Desktop from './Components/Desktop.js'
+import Welcome from './Components/Applications/Welcome'
+import './App.css'
 
 class App extends Component {
   
@@ -8,17 +10,19 @@ class App extends Component {
     super(props);
     this.state = {
       tasks: [{
-        title: "Hello world !",
+        title: "Welcome",
         isWindowActive: true,
         isWindowResizable: false,
         defaultWindowWidth: 400,
-        defaultWindowHeight: 500,
+        defaultWindowHeight: 400,
+        applicationComponent: <Welcome />
       },{
         title:"Text editor",
         isWindowActive: false,
         isWindowResizable: true,
         defaultWindowWidth: 200,
         defaultWindowHeight: 200,
+        applicationComponent: null
       }]
     }
 
