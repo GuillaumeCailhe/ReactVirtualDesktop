@@ -19,6 +19,24 @@ const Wallpaper = styled.div`
 `
 
 class Desktop extends Component {
+	constructor(props){
+		super(props)
+
+		this.state = {
+			width: 0,
+			height: 0
+		}
+
+		this.wallpaperRef = React.createRef()
+	}
+
+	componentDidMount() {
+		this.setState({
+			width: this.wallpaperRef.current.clientWidth,
+			height : this.wallpaperRef.current.clientHeight
+		})
+	}
+
 	render(){
 		const windows = this.props.tasks.map((task, index)=>
 			{
@@ -28,6 +46,8 @@ class Desktop extends Component {
 						id={index}
 						active={task.isWindowActive} 
 						resizable={task.isWindowResizable}
+						maxWidth={this.state.width}
+						maxHeight={this.state.height}
 					 	title={task.title}
 		      	minimizeFunction = {this.props.windowMinimizeFunction}
 		      	closeFunction = {this.props.windowCloseFunction}
@@ -38,7 +58,7 @@ class Desktop extends Component {
 		)
 
 		return(
-			<Wallpaper>
+			<Wallpaper innerRef={ this.wallpaperRef }>
 				{windows}
 			</Wallpaper>
 		)

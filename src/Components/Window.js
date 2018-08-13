@@ -12,7 +12,7 @@ const WindowWrapper = styled.div`
 
   background: #e6e6fa;
 
-  border-radius: 1%;
+  border-radius: ${props => props.maximized ? '0%' : '1%'};
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 `
 
@@ -94,7 +94,7 @@ function WindowButton(props){
 
 function ResizableWindow(props){
 	const resizableObject =(
-			<ResizableBox className={ props.resizable ? 'Resizable' : 'Unresizable' }
+			<ResizableBox className={ props.resizable && !props.maximized ? 'Resizable' : 'Unresizable' }
     			width={props.width}
   			 	height={props.height}
   			 	minConstraints={[200, 50]}
@@ -110,15 +110,63 @@ function ResizableWindow(props){
 }
 
 class Window extends Component {
+	constructor(props){
+		super(props)
+
+		this.state = {
+			isMaximized: false,
+			width: this.props.defaultWidth,
+			height: this.props.defaultHeight,
+			widthBeforeMaximized: this.props.defaultWidth,
+			heightBeforeMaximized: this.props.defaultHeight
+		}
+
+		this.maximizeWindow = this.maximizeWindow.bind(this)
+	}
   
+	maximizeWindow(){
+		let currentWidth = this.state.width
+		let currentHeight = this.state.height
+
+		if(!this.state.isMaximized){
+			this.setState({
+				isMaximized: true,
+				width: this.props.maxWidth,
+				height: this.props.maxHeight,
+				widthBeforeMaximized: currentWidth,
+				heightBeforeMaximized: currentHeight,
+			})
+		} else{
+			this.setState({
+				isMaximized: false,
+				width: this.state.widthBeforeMaximized,
+				height: this.state.heightBeforeMaximized,
+			})
+		}
+
+
+	}
+
   render() {
+		const enlargeButton = (
+			<a onClick={() => this.maximizeWindow()}>
+				<StyledWindowButton icon={faWindowMaximize} />
+			</a>
+		)
+
     return (  
     	<Draggable
-    		bounds="parent"
+    		bounds={{top: 0}}
 				handle = ".window-handle"
+				axis = {!this.state.isMaximized ? "both" : "none"}
     	>   
-    		<WindowWrapper>
-    			<ResizableWindow width={this.props.defaultWidth} height={this.props.defaultHeight} resizable={this.props.resizable}>
+    		<WindowWrapper maximized={this.state.isMaximized ? true : false} >
+    			<ResizableWindow 
+    			width={this.state.width}
+  			 	height={this.state.height}
+  			  resizable={this.props.resizable}
+			   	maximized={this.state.isMaximized}
+			   	>
       			<WindowHeader className="window-handle">
 		      		
 							<StyledWindowLogo />
@@ -130,10 +178,7 @@ class Window extends Component {
 									<StyledWindowButton icon={faWindowMinimize} onClick={() => alert("test")}  />
 								</a>
 								
-								{}
-								<a>
-									<StyledWindowButton icon={faWindowMaximize} />
-								</a>
+								{this.props.resizable ? enlargeButton : null}
 
 								<a onClick={() => this.props.closeFunction(this.props.id)}>
 									<StyledWindowButton icon={faWindowClose} />
@@ -158,6 +203,8 @@ Window.propTypes = {
 	resizable: PropTypes.bool,
 	defaultWidth: PropTypes.number,
 	defaultHeight: PropTypes.number,
+	maxWidth: PropTypes.number.isRequired,
+	maxHeight: PropTypes.number.isRequired,
 	minimizeFunction: PropTypes.func.isRequired,
 	closeFunction: PropTypes.func.isRequired
 }
