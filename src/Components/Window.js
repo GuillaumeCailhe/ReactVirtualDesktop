@@ -14,6 +14,8 @@ const WindowWrapper = styled.div`
 
   border-radius: ${props => props.maximized ? '0%' : '1%'};
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+  z-index: ${props => props.zIndex};
 `
 
 const WindowHeader = styled.div`
@@ -163,14 +165,20 @@ class Window extends Component {
 				// would probably need to implement a custom Draggable with DraggrableCore for that purpose
 				// or hack something with position and the onStop event
 				defaultPosition = {{x:(window.innerWidth/2)-(this.state.width/2), y:0}}
+				onStart = {() => this.props.focusFunction(this.props.id)}
     	>   
 
-    		<WindowWrapper maximized={this.state.isMaximized ? true : false} >
+    		<WindowWrapper 
+    		maximized={this.state.isMaximized ? true : false}
+    		zIndex={this.props.zIndex}
+    		onClick={() => this.props.focusFunction(this.props.id)}
+    		>
     			<ResizableWindow 
     			width={this.state.width}
   			 	height={this.state.height}
   			  resizable={this.props.resizable}
 			   	maximized={this.state.isMaximized}
+			   	onResize= {() => this.props.focusFunction(this.props.id)}
 			   	>
       			<WindowHeader className="window-handle">
 		      		
@@ -193,6 +201,7 @@ class Window extends Component {
 		      	</WindowHeader>
 
 		      	<WindowBody>
+		      		{this.props.zIndex}
 		      		{this.props.children}
 		      	</WindowBody>  
     		</ResizableWindow>
@@ -211,13 +220,16 @@ Window.propTypes = {
 	defaultHeight: PropTypes.number,
 	maxWidth: PropTypes.number.isRequired,
 	maxHeight: PropTypes.number.isRequired,
+	zIndex: PropTypes.number,
 	minimizeFunction: PropTypes.func.isRequired,
-	closeFunction: PropTypes.func.isRequired
+	closeFunction: PropTypes.func.isRequired,
+	focusFunction: PropTypes.func.isRequired
 }
 
 Window.defaultProps = {
 	defaultWidth: 500,
-	defaultHeight: 400
+	defaultHeight: 400,
+	zIndex: 0
 }
 
 export default Window

@@ -46,17 +46,19 @@ class Desktop extends Component {
 					<Window 
 						key={index}
 						id={index}
+						title={task.title}
 						active={task.isWindowActive} 
 						resizable={task.isWindowResizable}
 						defaultWidth={task.defaultWindowWidth}
 						defaultHeight={task.defaultWindowHeight}
 						maxWidth={this.state.width}
 						maxHeight={this.state.height}
-					 	title={task.title}
+					 	zIndex = {task.zIndex}
 		      	minimizeFunction = {this.props.windowMinimizeFunction}
 		      	closeFunction = {this.props.windowCloseFunction}
+		      	focusFunction = {this.props.windowFocusFunction}
 		  		>
-						{index === 0 ? <Welcome /> : null}
+						{task.applicationComponent}
 		  		</Window>
 	  		
 				return task.isWindowActive ? window : null
@@ -74,7 +76,8 @@ class Desktop extends Component {
 Desktop.propTypes = {
 	tasks: PropTypes.array,
 	windowMinimizeFunction: PropTypes.func.isRequired,
-	windowCloseFunction: PropTypes.func.isRequired
+	windowCloseFunction: PropTypes.func.isRequired,
+	windowFocusFunction: PropTypes.func.isRequired
 }
 
 export default Desktop;

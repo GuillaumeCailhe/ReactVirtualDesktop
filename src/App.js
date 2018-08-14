@@ -17,6 +17,7 @@ class App extends Component {
         isWindowResizable: false,
         defaultWindowWidth: 400,
         defaultWindowHeight: 400,
+        zIndex: 1
       },{
         title:"Text editor",
         applicationComponent: null,
@@ -24,7 +25,25 @@ class App extends Component {
         isWindowResizable: true,
         defaultWindowWidth: 200,
         defaultWindowHeight: 200,
-      }]
+        zIndex: 0
+      },{
+        title:"Hello world",
+        applicationComponent: null,
+        isWindowActive: false,
+        isWindowResizable: true,
+        defaultWindowWidth: 200,
+        defaultWindowHeight: 200,
+        zIndex: 0
+      },{
+        title:"Painter",
+        applicationComponent: null,
+        isWindowActive: false,
+        isWindowResizable: true,
+        defaultWindowWidth: 200,
+        defaultWindowHeight: 200,
+        zIndex: 0
+      }
+      ]
     }
 
     // Binding
@@ -32,6 +51,7 @@ class App extends Component {
     this.openWindow = this.openWindow.bind(this)
     this.minimizeWindow = this.minimizeWindow.bind(this)
     this.closeWindow = this.closeWindow.bind(this)
+    this.setFocus = this.setFocus.bind(this)
   }
 
   /**
@@ -55,6 +75,7 @@ class App extends Component {
   **/
   openWindow(taskIndex){
     this.setWindowActivity(taskIndex, true)
+    this.setFocus(taskIndex)
   }
   
   /**
@@ -78,6 +99,30 @@ class App extends Component {
     this.setState({tasks: tasksCopy})
   }
 
+  /**
+    Set the focus on a window (z-index)
+    @windowIndex: the window to focus on
+  **/
+  setFocus(windowIndex){
+    let tasksCopy = this.state.tasks
+    let tasksCopyLength = tasksCopy.length
+
+    if(tasksCopy[windowIndex].zIndex !== tasksCopyLength) // the z-index is not changed if it's not necessary
+    {
+      let windowOriginalZIndex = tasksCopy[windowIndex].zIndex
+      // the z-index is changed according to the number of tasks
+      for(let i = 0; i < tasksCopyLength; i++){
+        if(tasksCopy[i].zIndex > windowOriginalZIndex ){
+          tasksCopy[i].zIndex--
+        }else if(i == windowIndex){
+          tasksCopy[i].zIndex = tasksCopyLength
+        }
+      }
+      this.setState({tasks: tasksCopy})
+    }
+
+  }
+
   render() {
     return (
       <div>
@@ -89,6 +134,7 @@ class App extends Component {
           tasks = {this.state.tasks}
           windowMinimizeFunction = {this.minimizeWindow}
           windowCloseFunction = {this.closeWindow}
+          windowFocusFunction = {this.setFocus}
         />
       </div>
     );
