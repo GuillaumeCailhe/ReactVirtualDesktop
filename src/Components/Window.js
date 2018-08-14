@@ -119,7 +119,7 @@ class Window extends Component {
 			width: this.props.defaultWidth,
 			height: this.props.defaultHeight,
 			widthBeforeMaximized: this.props.defaultWidth,
-			heightBeforeMaximized: this.props.defaultHeight
+			heightBeforeMaximized: this.props.defaultHeight,
 		}
 
 		this.maximizeWindow = this.maximizeWindow.bind(this)
@@ -144,8 +144,6 @@ class Window extends Component {
 				height: this.state.heightBeforeMaximized,
 			})
 		}
-
-
 	}
 
   render() {
@@ -160,7 +158,9 @@ class Window extends Component {
     		bounds={{top: 0}}
 				handle = ".window-handle"
 				axis = {!this.state.isMaximized ? "both" : "none"}
+				defaultPosition = {{x:(window.innerWidth/2)-(this.state.width/2), y:0}}
     	>   
+
     		<WindowWrapper maximized={this.state.isMaximized ? true : false} >
     			<ResizableWindow 
     			width={this.state.width}
