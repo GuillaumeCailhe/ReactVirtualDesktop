@@ -22,7 +22,7 @@ const Wallpaper = styled.div`
 class Desktop extends Component {
 	constructor(props){
 		super(props)
-
+		
 		this.state = {
 			width: 0,
 			height: 0
@@ -32,6 +32,7 @@ class Desktop extends Component {
 	}
 
 	componentDidMount() {
+		// We get the wallpaper dimensions when it has been rendered
 		this.setState({
 			width: this.wallpaperRef.current.clientWidth,
 			height : this.wallpaperRef.current.clientHeight

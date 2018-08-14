@@ -158,6 +158,10 @@ class Window extends Component {
     		bounds={{top: 0}}
 				handle = ".window-handle"
 				axis = {!this.state.isMaximized ? "both" : "none"}
+				// not really the best way to center the div, we should use the parent element's width and not the window's
+				// but defaultPosition cannot be changed after mounting.
+				// would probably need to implement a custom Draggable with DraggrableCore for that purpose
+				// or hack something with position and the onStop event
 				defaultPosition = {{x:(window.innerWidth/2)-(this.state.width/2), y:0}}
     	>   
 
