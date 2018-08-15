@@ -201,7 +201,6 @@ class Window extends Component {
 		      	</WindowHeader>
 
 		      	<WindowBody>
-		      		{this.props.zIndex}
 		      		{this.props.children}
 		      	</WindowBody>  
     		</ResizableWindow>
