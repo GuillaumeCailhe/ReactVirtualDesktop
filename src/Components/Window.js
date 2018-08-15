@@ -165,27 +165,25 @@ class Window extends Component {
 				// would probably need to implement a custom Draggable with DraggrableCore for that purpose
 				// or hack something with position and the onStop event
 				defaultPosition = {{x:(window.innerWidth/2)-(this.state.width/2), y:0}}
-				onStart = {() => this.props.focusFunction(this.props.id)}
+				onMouseDown = {() => this.props.focusFunction(this.props.id)}
     	>   
 
     		<WindowWrapper 
     		maximized={this.state.isMaximized ? true : false}
-    		zIndex={this.props.zIndex}
-    		onClick={() => this.props.focusFunction(this.props.id)}
+    		zIndex={this.props.zIndex}	
     		>
     			<ResizableWindow 
     			width={this.state.width}
   			 	height={this.state.height}
   			  resizable={this.props.resizable}
 			   	maximized={this.state.isMaximized}
-			   	onResize= {() => this.props.focusFunction(this.props.id)}
 			   	>
       			<WindowHeader className="window-handle">
 		      		
 							<StyledWindowLogo />
 							<HeaderTitle>{this.props.title}</HeaderTitle>
 
-							<WindowButtonGroup onMouseDown={e => e.stopPropagation()}>
+							<WindowButtonGroup>
 
 								<a onClick={() => this.props.minimizeFunction(this.props.id)}>
 									<StyledWindowButton icon={faWindowMinimize} onClick={() => alert("test")}  />
@@ -226,8 +224,8 @@ Window.propTypes = {
 }
 
 Window.defaultProps = {
-	defaultWidth: 500,
-	defaultHeight: 400,
+	defaultWidth: 400,
+	defaultHeight: 500,
 	zIndex: 0
 }
 

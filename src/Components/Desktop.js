@@ -44,7 +44,7 @@ class Desktop extends Component {
 			{
 				const window = 
 					<Window 
-						key={index}
+						key={task.title + task.index}
 						id={index}
 						title={task.title}
 						active={task.isWindowActive} 

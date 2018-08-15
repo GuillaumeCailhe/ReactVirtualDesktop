@@ -107,7 +107,7 @@ class App extends Component {
     let tasksCopy = this.state.tasks
     let tasksCopyLength = tasksCopy.length
 
-    if(tasksCopy[windowIndex].zIndex !== tasksCopyLength) // the z-index is not changed if it's not necessary
+    if(tasksCopyLength > 1 && tasksCopy[windowIndex].zIndex !== tasksCopyLength) // the z-index is not changed if it's not necessary
     {
       let windowOriginalZIndex = tasksCopy[windowIndex].zIndex
       // the z-index is changed according to the number of tasks
