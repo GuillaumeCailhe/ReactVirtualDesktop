@@ -17,7 +17,7 @@ class App extends Component {
         isWindowResizable: false,
         defaultWindowWidth: 400,
         defaultWindowHeight: 400,
-        zIndex: 1
+        zIndex: 4
       },{
         title:"Text editor",
         applicationComponent: null,

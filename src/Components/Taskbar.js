@@ -36,6 +36,7 @@ const StyledTaskList = styled(TaskList)`
 
 const Task = styled.li`
 	display: inline;
+	color: ${props => props.focused ? 'white' : '#888888'};
 	margin-right: 20px;
 `
 
@@ -52,10 +53,12 @@ function Logo(props){
 }
 
 function TaskList(props){
-		const tasks = props.tasks.map((task, index)=>
+	const tasksLength = props.tasks.length
+	const tasks = props.tasks.map((task, index)=>
 		<Task 
 			key={index}
 			onClick={() => props.onTaskClick(index)}
+			focused={task.zIndex === tasksLength ? true : false}
 		>
 			{task.title}
 		</Task>
