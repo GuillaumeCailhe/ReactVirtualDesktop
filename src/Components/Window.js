@@ -78,8 +78,6 @@ const WindowBody = styled.div`
 	left: 6px;
 	right: 6px;
 
-	padding-left: 10px;
-	padding-right: 10px;
 	overflow: auto;
 `
 

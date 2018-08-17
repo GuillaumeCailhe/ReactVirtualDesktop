@@ -1,13 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
 
+const WelcomeDiv = styled.div`
+	padding-left: 10px;
+	padding-right: 10px;
+`
+
 const Title = styled.h3`
 	text-align: center;
 `
 
 function Welcome(props){
 	return(
-		<div>
+		<WelcomeDiv>
 			<Title>Welcome to React Virtual Desktop</Title>
 			<p>React Virtual Desktop allows you to use your browser like a simplified OS.</p>
 
@@ -22,7 +27,7 @@ function Welcome(props){
 
 			</p>
 			<h4>Have fun !</h4>
-		</div>
+		</WelcomeDiv>
 	)
 }
 

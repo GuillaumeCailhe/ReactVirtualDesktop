@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 import Window from './Window.js'
 import PropTypes from 'prop-types'
-import Welcome from './Applications/Welcome'
 
 const Wallpaper = styled.div`
 	background : #61dafb;

@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
-import TaskBar from './Components/Taskbar.js'
-import Desktop from './Components/Desktop.js'
+import TaskBar from './Components/Taskbar'
+import Desktop from './Components/Desktop'
 import Welcome from './Components/Applications/Welcome'
+import TaskManager from './Components/Applications/TaskManager'
 import './App.css'
 
 class App extends Component {
@@ -19,12 +20,12 @@ class App extends Component {
         defaultWindowHeight: 400,
         zIndex: 4
       },{
-        title:"Text editor",
+        title:"Task manager",
         applicationComponent: null,
         isWindowActive: false,
         isWindowResizable: true,
-        defaultWindowWidth: 200,
-        defaultWindowHeight: 200,
+        defaultWindowWidth: 400,
+        defaultWindowHeight: 300,
         zIndex: 0
       },{
         title:"Hello world",
@@ -50,8 +51,17 @@ class App extends Component {
     this.setWindowActivity = this.setWindowActivity.bind(this)
     this.openWindow = this.openWindow.bind(this)
     this.minimizeWindow = this.minimizeWindow.bind(this)
-    this.closeWindow = this.closeWindow.bind(this)
+    this.closeTask = this.closeTask.bind(this)
     this.setFocus = this.setFocus.bind(this)
+  }
+
+  componentDidMount(){
+    // will be useless when the application's informations will be fetched from API
+    let tasksCopy = this.state.tasks
+    tasksCopy[1].applicationComponent = <TaskManager tasks={this.state.tasks} killFunction={this.closeTask} />
+    this.setState({
+      tasks: tasksCopy
+    })
   }
 
   /**
@@ -93,11 +103,16 @@ class App extends Component {
     Terminate the underlying application.
     @taskIndex : the id of the window/task
   **/
-  closeWindow(taskIndex){
+  closeTask(taskIndex){
+    // We set the focus before closing, to avoid disrupting the z-index order
+    this.setFocus(taskIndex)
+    
+    // Removing the task from the list
     let tasksCopy = this.state.tasks
     tasksCopy.splice(taskIndex, 1)
     this.setState({tasks: tasksCopy})
   }
+
 
   /**
     Set the focus on a window (z-index)
@@ -114,7 +129,7 @@ class App extends Component {
       for(let i = 0; i < tasksCopyLength; i++){
         if(tasksCopy[i].zIndex > windowOriginalZIndex ){
           tasksCopy[i].zIndex--
-        }else if(i == windowIndex){
+        }else if(i === windowIndex){
           tasksCopy[i].zIndex = tasksCopyLength
         }
       }
@@ -133,7 +148,7 @@ class App extends Component {
         <Desktop 
           tasks = {this.state.tasks}
           windowMinimizeFunction = {this.minimizeWindow}
-          windowCloseFunction = {this.closeWindow}
+          windowCloseFunction = {this.closeTask}
           windowFocusFunction = {this.setFocus}
         />
       </div>
