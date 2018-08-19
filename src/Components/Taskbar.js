@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import Clock from "./Clock"
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faReact } from '@fortawesome/free-brands-svg-icons'
-import PropTypes from 'prop-types'
 
 const Bar = styled.header`
 	background-color: black;
@@ -17,11 +17,16 @@ const Bar = styled.header`
 
 const StyledLogo = styled(Logo)`
 	display: inline-block;
-	margin-left: 10px;
+	padding-left: 5px;
+	padding-right: 5px;
 
 	vertical-align:middle;
 	font-size: 2em;
 	color: #61dafb;
+
+	&:hover{
+		background: white;
+	}
 `
 
 const StyledTaskList = styled(TaskList)`
@@ -38,6 +43,7 @@ const Task = styled.li`
 	display: inline;
 	color: ${props => props.focused ? 'white' : '#888888'};
 	margin-right: 20px;
+	cursor: pointer;
 `
 
 const ClockWrapper = styled.div`
@@ -48,7 +54,12 @@ const ClockWrapper = styled.div`
 
 function Logo(props){
 	return(
-		<FontAwesomeIcon className={props.className} icon={faReact} spin />
+		<div 
+		className={props.className}
+		onClick = {() => props.openAppMenuFunction()}
+		>
+			<FontAwesomeIcon icon={faReact} spin/>
+		</div>	
 	)
 }
 
@@ -71,10 +82,11 @@ function TaskList(props){
 class TaskBar extends Component {
 
   render() {
-
     return (
 		<Bar>
-			<StyledLogo />
+			<StyledLogo  
+				openAppMenuFunction = {this.props.openAppMenuFunction}
+			/>
 
 			<StyledTaskList 
 			tasks={this.props.tasks}
@@ -92,6 +104,7 @@ class TaskBar extends Component {
 TaskBar.propTypes = {
 	tasks: PropTypes.array,
 	onTaskClick: PropTypes.func.isRequired,
+	openAppMenuFunction: PropTypes.func.isRequired
 }
 
 

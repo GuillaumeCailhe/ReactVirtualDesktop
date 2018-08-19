@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import TaskBar from './Components/Taskbar'
 import Desktop from './Components/Desktop'
+import AppMenu from './Components/AppMenu'
 import Welcome from './Components/Applications/Welcome'
 import TaskManager from './Components/Applications/TaskManager'
 import './App.css'
@@ -10,7 +11,8 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      // tasks is used to deal with the windows and the taskbar
+      isAppMenuShown : false,
+      applications: null,
       tasks: [{
         title: "Welcome", 
         applicationComponent: <Welcome />,
@@ -18,31 +20,7 @@ class App extends Component {
         isWindowResizable: false,
         defaultWindowWidth: 400,
         defaultWindowHeight: 400,
-        zIndex: 4
-      },{
-        title:"Task manager",
-        applicationComponent: null,
-        isWindowActive: false,
-        isWindowResizable: true,
-        defaultWindowWidth: 400,
-        defaultWindowHeight: 300,
-        zIndex: 0
-      },{
-        title:"Hello world",
-        applicationComponent: null,
-        isWindowActive: false,
-        isWindowResizable: true,
-        defaultWindowWidth: 200,
-        defaultWindowHeight: 200,
-        zIndex: 0
-      },{
-        title:"Painter",
-        applicationComponent: null,
-        isWindowActive: false,
-        isWindowResizable: true,
-        defaultWindowWidth: 200,
-        defaultWindowHeight: 200,
-        zIndex: 0
+        zIndex: 1
       }
       ]
     }
@@ -53,16 +31,30 @@ class App extends Component {
     this.minimizeWindow = this.minimizeWindow.bind(this)
     this.closeTask = this.closeTask.bind(this)
     this.setFocus = this.setFocus.bind(this)
+    this.openAppMenu = this.openAppMenu.bind(this)
+    this.closeAppMenu = this.closeAppMenu.bind(this)
+    this.createTask = this.createTask.bind(this)
   }
-
+  
   componentDidMount(){
-    // will be useless when the application's informations will be fetched from API
-    let tasksCopy = this.state.tasks
-    tasksCopy[1].applicationComponent = <TaskManager tasks={this.state.tasks} killFunction={this.closeTask} />
-    this.setState({
-      tasks: tasksCopy
+      this.setState({
+      // List of available applications to create tasks from
+      applications:[{
+        title: "Task manager",
+        component: <TaskManager tasks={this.state.tasks} killFunction={this.closeTask} />,
+        isWindowResizable: true,
+        defaultWindowWidth: 400,
+        defaultWindowHeight: 400,
+      },{
+        title: "Empty window",
+        component: null,
+        isWindowResizable: true,
+        defaultWindowWidth: 200,
+        defaultWindowHeight: 200,
+      }]
     })
   }
+  // Functions relative to windows and tasks
 
   /**
   Set a window in(active) 
@@ -95,6 +87,31 @@ class App extends Component {
   **/
   minimizeWindow(taskIndex){
     this.setWindowActivity(taskIndex, false)
+  }
+
+  /**
+    Create a new task of a certain application
+    @applicationId: the id of the app as refered in the applications state
+  **/
+  createTask(applicationId){
+    // Task creation
+    let application = this.state.applications[applicationId]
+
+    let task = {
+        title: application.title, 
+        applicationComponent: application.component,
+        isWindowResizable: application.isWindowResizable,
+        defaultWindowWidth: application.defaultWindowWidth,
+        defaultWindowHeight: application.defaultWindowHeight,
+    }
+
+    // Changing the state
+    let tasksCopy = this.state.tasks
+    tasksCopy.push(task)
+    this.setState({tasks: tasksCopy})
+
+    // Open the created task
+    this.openWindow(this.state.tasks.length-1)
   }
   
   /**
@@ -135,15 +152,33 @@ class App extends Component {
       }
       this.setState({tasks: tasksCopy})
     }
+  }
 
+  // Functions relative to the app menu
+  openAppMenu(){
+    this.setState({isAppMenuShown: true})
+  }
+
+  closeAppMenu(){
+    this.setState({isAppMenuShown: false})
   }
 
   render() {
+    let appMenu = null
+    if(this.state.isAppMenuShown){
+        appMenu = <AppMenu 
+          closeMenuFunction = {this.closeAppMenu} 
+          applications = {this.state.applications}
+          createTaskFunction={this.createTask} 
+          />
+      }
+
     return (
       <div>
         <TaskBar 
           tasks={this.state.tasks}
           onTaskClick={this.openWindow}
+          openAppMenuFunction={this.openAppMenu}
         />
         <Desktop 
           tasks = {this.state.tasks}
@@ -151,8 +186,9 @@ class App extends Component {
           windowCloseFunction = {this.closeTask}
           windowFocusFunction = {this.setFocus}
         />
+        {appMenu}
       </div>
-    );
+    )
   }
 }
 
