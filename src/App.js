@@ -160,7 +160,7 @@ class App extends Component {
   }
 
   closeAppMenu(){
-    this.setState({isAppMenuShown: false})
+     this.setState({isAppMenuShown: false})
   }
 
   render() {
@@ -170,6 +170,7 @@ class App extends Component {
           closeMenuFunction = {this.closeAppMenu} 
           applications = {this.state.applications}
           createTaskFunction={this.createTask} 
+          menuZIndex = {this.state.tasks.length+1}
           />
       }
 
