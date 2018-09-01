@@ -38,5 +38,5 @@ jobs:
 
       # store coverage artifacts
       - store_artifacts:
-        path: coverage
-        prefix: coverage
+          path: coverage
+          prefix: coverage
