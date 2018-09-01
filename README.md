@@ -1,7 +1,14 @@
 <h1 align="center">React Virtual Desktop</h1>
 
-  [![CircleCI](https://circleci.com/gh/GuillaumeCailhe/react-virtual-desktop.svg?style=svg)](https://circleci.com/gh/GuillaumeCailhe/react-virtual-desktop)
-  [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+<p align="center">
+  <a href="https://circleci.com/gh/GuillaumeCailhe/react-virtual-desktop">
+    <img alt="CircleCI build status" src="https://img.shields.io/circleci/project/github/GuillaumeCailhe/react-virtual-desktop/master.svg" />
+  </a>
+  
+  <a href="#badge">
+    <img alt="code style: prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square">
+  </a>
+</p>
 
 ## Intro
 
