@@ -28,10 +28,6 @@
       "git add"
     ]
   },
-  "jest": {
-    "coverageDirectory": "./coverage/",
-    "collectCoverage": true
-  },
   "devDependencies": {
     "babel-eslint": "^8.2.6",
     "eslint": "^5.4.0",
