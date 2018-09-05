@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
-import Clock from './Clock';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faReact } from '@fortawesome/free-brands-svg-icons';
+import React, { Component } from "react";
+import Clock from "./Clock";
+import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faReact } from "@fortawesome/free-brands-svg-icons";
 
 const Bar = styled.header`
   background-color: black;
@@ -41,7 +40,7 @@ const StyledTaskList = styled(TaskList)`
 
 const Task = styled.li`
   display: inline;
-  color: ${props => (props.focused ? 'white' : '#888888')};
+  color: ${props => (props.focused ? "white" : "#888888")};
   margin-right: 20px;
   cursor: pointer;
 `;
@@ -77,7 +76,13 @@ function TaskList(props) {
   return <ul className={props.className}> {tasks}</ul>;
 }
 
-class TaskBar extends Component {
+type TaskBarProps = {
+  tasks?: array,
+  onTaskClick: func,
+  openAppMenuFunction: func
+};
+
+class TaskBar extends Component<TaskBarProps> {
   render() {
     return (
       <Bar>
@@ -95,11 +100,5 @@ class TaskBar extends Component {
     );
   }
 }
-
-TaskBar.propTypes = {
-  tasks: PropTypes.array,
-  onTaskClick: PropTypes.func.isRequired,
-  openAppMenuFunction: PropTypes.func.isRequired
-};
 
 export default TaskBar;

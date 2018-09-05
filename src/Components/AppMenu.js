@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import styled from "styled-components";
 
 const StyledAppMenu = styled.div`
   background: black;
@@ -29,7 +28,14 @@ const App = styled.div`
   }
 `;
 
-class AppMenu extends Component {
+type AppMenuProps = {
+  applications: array,
+  closeMenuFunction: func,
+  createTaskFunction: func,
+  menuZIndex: number
+};
+
+class AppMenu extends Component<AppMenuProps> {
   constructor(props) {
     super(props);
 
@@ -40,11 +46,11 @@ class AppMenu extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener('mousedown', this.handleClickAnywhere);
+    document.addEventListener("mousedown", this.handleClickAnywhere);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClickAnywhere);
+    document.removeEventListener("mousedown", this.handleClickAnywhere);
   }
 
   handleClickAnywhere(event) {
@@ -74,13 +80,6 @@ class AppMenu extends Component {
     );
   }
 }
-
-AppMenu.propTypes = {
-  applications: PropTypes.array,
-  closeMenuFunction: PropTypes.func.isRequired,
-  createTaskFunction: PropTypes.func.isRequired,
-  menuZIndex: PropTypes.number.isRequired
-};
 
 AppMenu.defaultProps = {
   menuZIndex: 1000

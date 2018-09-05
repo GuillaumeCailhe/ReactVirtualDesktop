@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import Window from './Window.js';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import styled from "styled-components";
+import Window from "./Window.js";
 
 const Wallpaper = styled.div`
   background: #61dafb;
@@ -43,7 +42,14 @@ const Wallpaper = styled.div`
   right: 0px;
 `;
 
-class Desktop extends Component {
+type DesktopProps = {
+  tasks?: array,
+  windowMinimizeFunction: func,
+  windowCloseFunction: func,
+  windowFocusFunction: func
+};
+
+class Desktop extends Component<DesktopProps> {
   constructor(props) {
     super(props);
 
@@ -91,12 +97,5 @@ class Desktop extends Component {
     return <Wallpaper innerRef={this.wallpaperRef}>{windows}</Wallpaper>;
   }
 }
-
-Desktop.propTypes = {
-  tasks: PropTypes.array,
-  windowMinimizeFunction: PropTypes.func.isRequired,
-  windowCloseFunction: PropTypes.func.isRequired,
-  windowFocusFunction: PropTypes.func.isRequired
-};
 
 export default Desktop;

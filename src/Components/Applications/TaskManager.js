@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import styled from "styled-components";
 
 const Table = styled.table`
   width: 100%;
@@ -16,7 +15,7 @@ const Table = styled.table`
 `;
 
 const TaskTr = styled.tr`
-  background-color: ${props => (props.selected ? '#61dafb' : 'none')};
+  background-color: ${props => (props.selected ? "#61dafb" : "none")};
 `;
 
 const KillButton = styled.button`
@@ -32,7 +31,12 @@ const KillButton = styled.button`
 	}
 `;
 
-class TaskManager extends Component {
+type TaskManagerProps = {
+  tasks: array,
+  killFunction: func
+};
+
+class TaskManager extends Component<TaskManagerProps> {
   constructor(props) {
     super(props);
 
@@ -83,10 +87,5 @@ class TaskManager extends Component {
     );
   }
 }
-
-TaskManager.propTypes = {
-  tasks: PropTypes.array.isRequired,
-  killFunction: PropTypes.func.isRequired
-};
 
 export default TaskManager;

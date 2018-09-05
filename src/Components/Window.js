@@ -1,22 +1,21 @@
-import React, { Component } from 'react';
-import Draggable from 'react-draggable';
-import { ResizableBox } from 'react-resizable';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faReact } from '@fortawesome/free-brands-svg-icons';
+import React, { Component } from "react";
+import Draggable from "react-draggable";
+import { ResizableBox } from "react-resizable";
+import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faReact } from "@fortawesome/free-brands-svg-icons";
 import {
   faWindowMinimize,
   faWindowMaximize,
   faWindowClose
-} from '@fortawesome/free-solid-svg-icons';
+} from "@fortawesome/free-solid-svg-icons";
 
 const WindowWrapper = styled.div`
   position: absolute;
 
   background: #e6e6fa;
 
-  border-radius: ${props => (props.maximized ? '0%' : '1%')};
+  border-radius: ${props => (props.maximized ? "0%" : "1%")};
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
   z-index: ${props => props.zIndex};
@@ -97,12 +96,12 @@ function ResizableWindow(props) {
   const resizableObject = (
     <ResizableBox
       className={
-        props.resizable && !props.maximized ? 'Resizable' : 'Unresizable'
+        props.resizable && !props.maximized ? "Resizable" : "Unresizable"
       }
       width={props.width}
       height={props.height}
       minConstraints={[200, 50]}
-      axis={props.resizable ? 'both' : 'none'}
+      axis={props.resizable ? "both" : "none"}
       handleSize={[0, 0]}
     >
       {props.children}
@@ -112,7 +111,22 @@ function ResizableWindow(props) {
   return resizableObject;
 }
 
-class Window extends Component {
+type WindowProps = {
+  id: number,
+  title?: string,
+  active?: boolean,
+  resizable?: boolean,
+  defaultWidth?: number,
+  defaultHeight?: number,
+  maxWidth: number,
+  maxHeight: number,
+  zIndex?: number,
+  minimizeFunction: func,
+  closeFunction: func,
+  focusFunction: func
+};
+
+class Window extends Component<WindowProps> {
   constructor(props) {
     super(props);
 
@@ -159,7 +173,7 @@ class Window extends Component {
       <Draggable
         bounds={{ top: 0 }}
         handle=".window-handle"
-        axis={!this.state.isMaximized ? 'both' : 'none'}
+        axis={!this.state.isMaximized ? "both" : "none"}
         // not really the best way to center the div, we should use the parent element's width and not the window's
         // but defaultPosition cannot be changed after mounting.
         // would probably need to implement a custom Draggable with DraggrableCore for that purpose
@@ -188,7 +202,7 @@ class Window extends Component {
                 <a onClick={() => this.props.minimizeFunction(this.props.id)}>
                   <StyledWindowButton
                     icon={faWindowMinimize}
-                    onClick={() => alert('test')}
+                    onClick={() => alert("test")}
                   />
                 </a>
 
@@ -207,21 +221,6 @@ class Window extends Component {
     );
   }
 }
-
-Window.propTypes = {
-  id: PropTypes.number.isRequired,
-  title: PropTypes.string,
-  active: PropTypes.bool,
-  resizable: PropTypes.bool,
-  defaultWidth: PropTypes.number,
-  defaultHeight: PropTypes.number,
-  maxWidth: PropTypes.number.isRequired,
-  maxHeight: PropTypes.number.isRequired,
-  zIndex: PropTypes.number,
-  minimizeFunction: PropTypes.func.isRequired,
-  closeFunction: PropTypes.func.isRequired,
-  focusFunction: PropTypes.func.isRequired
-};
 
 Window.defaultProps = {
   defaultWidth: 400,
