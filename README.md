@@ -14,6 +14,6 @@
   </a>
 </p>
 
-## Intro
+## What is React Virtual Desktop ?
 
 React-virtual-desktop is a simple javascript interface that emulates an OS in your browser.
